@@ -20,6 +20,8 @@ find_package (
     REQUIRED
 )
 
+pkg_check_modules (LIBUSB REQUIRED libusb-1.0)
+
 add_subdirectory(src/deviceDetectors)
 add_subdirectory(src/processor)
 add_subdirectory(src)

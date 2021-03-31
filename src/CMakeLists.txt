@@ -7,7 +7,18 @@ add_executable (devicehelper
 
 include_directories (devicehelper
     PRIVATE
+        ${CMAKE_SOURCE_DIR}/src/deviceDetectors
         ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/src/processor
+        ${CMAKE_SOURCE_DIR}/src/utils
+)
+
+add_dependencies(devicehelper processor device-detectors)
+
+target_link_libraries (devicehelper
+    PRIVATE
+        processor
+        device-detectors
 )
 
 install (

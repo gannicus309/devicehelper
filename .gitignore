@@ -1,0 +1,18 @@
+# Ignore CMake cache files
+CMakeLists.txt.user
+CMakeCache.txt
+**/CMakeFiles/
+**/Makefile
+**/*.gcov
+
+# Ignore shadow build directory
+build/
+
+# Ignore test results
+*/*-test.xml
+
+# Ignore vim files
+.*.sw*
+
+#ignore vscode project files
+*.vscode*

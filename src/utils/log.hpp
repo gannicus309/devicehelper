@@ -1,21 +1,9 @@
 /*********************************************************************
  *  * ----------------------------------------------------------------------
- *  @file         run.cpp
+ *  @file         log.hpp
  *  @author       Ganesh Rengasamy
  *********************************************************************/
 
+/* Add DLT logging here */
 #include <iostream>
-#include <memory>
-#include <thread>
-#include "utils/log.hpp"
-#include "run.hpp"
-
-namespace devicehelper
-{
-
-void run()
-{
-    LOG_GENERAL << "Starting devicehelper\n";
-}
-
-} // namespace devicehelper
+#define LOG_GENERAL std::cout<<"[GENERAL] "<<__FUNCTION__ << "[" << __LINE__ << "] "

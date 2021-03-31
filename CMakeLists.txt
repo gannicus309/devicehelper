@@ -20,4 +20,6 @@ find_package (
     REQUIRED
 )
 
+add_subdirectory(src/deviceDetectors)
+add_subdirectory(src/processor)
 add_subdirectory(src)

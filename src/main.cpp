@@ -1,3 +1,8 @@
+/*********************************************************************
+ *  @file         main.cpp
+ *  @author       Ganesh Rengasamy
+ *********************************************************************/
+
 #include <iostream>
 #include <exception>
 #include "run.hpp"

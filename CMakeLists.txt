@@ -21,6 +21,7 @@ find_package (
 )
 
 pkg_check_modules (LIBUSB REQUIRED libusb-1.0)
+pkg_check_modules (GIOMM REQUIRED giomm-2.4)
 
 add_subdirectory(src/deviceDetectors)
 add_subdirectory(src/processor)

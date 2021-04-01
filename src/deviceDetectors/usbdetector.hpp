@@ -1,5 +1,4 @@
 /*********************************************************************
- *  * ----------------------------------------------------------------------
  *  @file         usbdetector.hpp
  *  @author       Ganesh Rengasamy
  *********************************************************************/
@@ -8,6 +7,7 @@
 
 #include <libudev.h>
 #include <memory>
+#include "deviceinfo.hpp"
 
 namespace devicehelper
 {
@@ -31,7 +31,7 @@ public:
     void monitor_devices(struct udev *udev);
     void enumerate_devices(struct udev *udev);
     void process_device(struct udev_device *dev);
-    void print_device();
+    void print_device(const deviceList::DeviceInfo &deviceInfo);
 
 };
 

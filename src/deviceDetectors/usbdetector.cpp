@@ -1,5 +1,4 @@
 /*********************************************************************
- *  * ----------------------------------------------------------------------
  *  @file         usbdetector.cpp
  *  @author       Ganesh Rengasamy
  *********************************************************************/
@@ -29,7 +28,8 @@ namespace devicehelper
 {
 namespace detector
 {
-#undef LOGUSBMONITOR
+//#undef LOGUSBMONITOR
+#define LOGUSBMONITOR ON
 
 int USBDetector::udev_initialize()
 {
@@ -53,13 +53,161 @@ int USBDetector::udev_initialize()
     return 0;
 }
 
-void USBDetector::print_device()
+void USBDetector::print_device(const deviceList::DeviceInfo &deviceInfo)
 {
+#ifdef LOGUSBMONITOR
+    DBG_MSG_USBMONITOR << deviceInfo.serialNumber << "\t" << std::hex
+                       << deviceInfo.vendorID << "\t" << std::hex
+                       << deviceInfo.productID << "\t" << deviceInfo.devicePath
+                       << '\n';
+#endif
+
+    deviceList::DeviceInfo threadMsg = deviceInfo;
 }
 
 void USBDetector::process_device(struct udev_device *dev)
 {
+    if (dev)
+    {
+        deviceList::DeviceInfo deviceInfo;
 
+        const char *vendor = udev_device_get_sysattr_value(dev, UDEV_VENDORID_TAG);
+        if (vendor)
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "vendor " << vendor << "\n";
+            #endif
+            std::stringstream strstream;
+            strstream << std::hex << vendor;
+            strstream >> deviceInfo.vendorID;
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "vendorid empty\n";
+            #endif
+        }
+
+        const char *product =
+            udev_device_get_sysattr_value(dev, UDEV_PRODUCTID_TAG);
+        if (product)
+        {
+            std::stringstream strstream;
+            strstream << std::hex << product;
+            strstream >> deviceInfo.productID;
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "productid is  empty\n";
+            #endif
+        }
+
+        const char *serialNumber =
+            udev_device_get_sysattr_value(dev, UDEV_SERIAL_NUMBER_TAG);
+        if (serialNumber)
+        {
+            deviceInfo.serialNumber = serialNumber;
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "serial number is empty\n";
+            #endif
+        }
+
+        const char *syspath = udev_device_get_syspath(dev);
+        if (syspath)
+        {
+            deviceInfo.devicePath = syspath;
+        }
+
+        const char *deviceNo =
+            udev_device_get_sysattr_value(dev, UDEV_DEVICE_NUMBER);
+        if (deviceNo)
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "Device number " << deviceNo << "\n";
+            #endif
+            std::stringstream strstream;
+            strstream << deviceNo;
+            strstream >> deviceInfo.deviceNo;
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "Device number is empty\n";
+            #endif
+        }
+
+        const char *busNo =
+            udev_device_get_sysattr_value(dev, UDEV_BUS_NUMBER);
+        if (busNo)
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "Bus number " << busNo << "\n";
+            #endif
+            std::stringstream strstream;
+            strstream << busNo;
+            strstream >> deviceInfo.busNo;
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "Bus number is empty\n";
+            #endif
+        }
+
+        const char *deviceSubClass =
+            udev_device_get_sysattr_value(dev, UDEV_DEVICE_SUBCLASS);
+        if (deviceSubClass)
+        {
+            //TODO Add switch case to map enums
+            //deviceInfo.usbDeviceSubClass = deviceSubClass;
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "DeviceSubClass "<< deviceSubClass<<"\n";
+            #endif
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "DeviceSubClass is empty\n";
+            #endif
+        }
+
+        const char *devType = udev_device_get_devtype(dev);
+        if (devType)
+        {
+            //deviceInfo.deviceType = (int)devType;
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "DevType "<< devType<<"\n";
+            #endif
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "DeviceType is empty\n";
+            #endif
+        }
+
+        const char *devName = udev_device_get_sysattr_value(dev, UDEV_DEVICE_NAME);
+        if (devName)
+        {
+            deviceInfo.mediumName = devName;
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "Device Name "<< devName<<"\n";
+            #endif
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            DBG_MSG_USBMONITOR << "Device Name is empty\n";
+            #endif
+        }
+        print_device(deviceInfo);
+
+        udev_device_unref(dev);
+    }
 }
 
 void USBDetector::enumerate_devices(struct udev *udev)

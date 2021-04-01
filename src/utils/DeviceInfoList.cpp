@@ -11,7 +11,6 @@ namespace devicehelper
 {
 namespace deviceList
 {
-#undef LOGDEVICELIST
 
 DeviceListErrorCodes DeviceInfoList::AddDevice(const DeviceInfo &deviceInfo)
 {

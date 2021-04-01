@@ -13,8 +13,6 @@ namespace devicehelper {
 
 using namespace std::chrono_literals;
 
-#undef LOGDEVICEEVENTLOOP
-
 void DeviceEventLoop::run(std::shared_ptr<MessageQueue> messagequeue, 
 std::shared_ptr<deviceList::DeviceInfoList> deviceinfolist,
 DevicehelperServer* devicehelperserver)

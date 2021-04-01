@@ -12,7 +12,6 @@ namespace devicehelper {
 namespace deviceList {
 
 #define DEBUG 1
-#undef LOGLIBUSBHELPER
 
 LibUsbWrapper::LibUsbWrapper() {
   int ret = libusb_init(&mUsbContext);

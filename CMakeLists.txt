@@ -10,6 +10,9 @@ add_compile_options(-Wextra)
 # add_compile_options(-Wpedantic)
 add_compile_options(-Wfloat-equal)
 add_compile_options(-Werror=return-type)
+option(LOGUSBMONITOR "Logs from USB monitor worker" OFF)
+option(LOGLIBUSBHELPER "Logs from libusb for debugging" OFF)
+option(LOGDEVLIST "Logs from devicelist and eventing for debugging" OFF)
 
 if (NOT CMAKE_BUILD_TYPE)
     set (CMAKE_BUILD_TYPE "Release")
@@ -29,6 +32,17 @@ find_package (
 
 pkg_check_modules (LIBUSB REQUIRED libusb-1.0)
 pkg_check_modules (GIOMM REQUIRED giomm-2.4)
+
+if(LOGUSBMONITOR)
+    add_compile_definitions(LOGUSBMONITOR=1)
+endif()
+if(LOGLIBUSBHELPER)
+    add_compile_definitions(LOGLIBUSBHELPER=1)
+endif()
+if(LOGDEVLIST)
+    add_compile_definitions(LOGDEVICELIST=1)
+    add_compile_definitions(LOGDEVICEEVENTLOOP=1)
+endif()
 
 add_subdirectory(src/deviceDetectors)
 add_subdirectory(src/processor)

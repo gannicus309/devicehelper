@@ -27,8 +27,6 @@ namespace devicehelper
 {
 namespace detector
 {
-//#undef LOGUSBMONITOR
-#define LOGUSBMONITOR ON
 
 int USBDetector::udev_initialize(std::shared_ptr<MessageQueue> messagequeue)
 {

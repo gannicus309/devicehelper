@@ -4,6 +4,7 @@ message(STATUS "Building processor")
 add_library (processor STATIC
     run.cpp
     ${CMAKE_SOURCE_DIR}/src/utils/libusb_wrapper.cpp
+    DevicehelperServer.cpp
 )
 
 target_include_directories (processor

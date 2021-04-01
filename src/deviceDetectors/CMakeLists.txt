@@ -4,7 +4,7 @@ message(STATUS "Building deviceDetectors")
 project (device-detectors)
 
 add_library (device-detectors STATIC
-    usbdetector.cpp
+    USBDetector.cpp
 )
 
 target_include_directories (device-detectors

@@ -6,7 +6,7 @@
 #pragma once
 
 #include <libusb.h>
-#include <deviceinfo.hpp>
+#include <DeviceInfo.hpp>
 
 namespace devicehelper {
 namespace deviceList

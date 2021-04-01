@@ -1,5 +1,5 @@
 /*********************************************************************
- *  @file         usbdetector.hpp
+ *  @file         USBDetector.hpp
  *  @author       Ganesh Rengasamy
  *********************************************************************/
 
@@ -7,7 +7,7 @@
 
 #include <libudev.h>
 #include <memory>
-#include "deviceinfo.hpp"
+#include "DeviceInfo.hpp"
 
 namespace devicehelper
 {

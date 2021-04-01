@@ -3,12 +3,11 @@
  *  @author       Ganesh Rengasamy
  *********************************************************************/
 
-#include <iostream>
-#include <stdio.h>
 #include <cstring>
 #include <sstream>
 #include "USBDetector.hpp"
 #include "log.hpp"
+#include <mutex>
 
 #define SUBSYSTEM "usb"
 const char *UDEV_VENDORID_TAG = "idVendor";
@@ -31,12 +30,12 @@ namespace detector
 //#undef LOGUSBMONITOR
 #define LOGUSBMONITOR ON
 
-int USBDetector::udev_initialize()
+int USBDetector::udev_initialize(std::shared_ptr<MessageQueue> messagequeue)
 {
 #ifdef LOGUSBMONITOR
     LOG_USBMONITOR << "udev Initializing\n";
 #endif
-
+    m_messageQueue = messagequeue;
     struct udev *udev = udev_new();
     if (!udev)
     {
@@ -63,6 +62,14 @@ void USBDetector::print_device(const deviceList::DeviceInfo &deviceInfo)
 #endif
 
     deviceList::DeviceInfo threadMsg = deviceInfo;
+    {
+        #ifdef LOGUSBMONITOR
+        LOG_USBMONITOR << "Updating Message queue for Device Name(SerialNumber) = " <<deviceInfo.mediumName<<"("<<deviceInfo.serialNumber<<")\n";
+        #endif
+        std::lock_guard<std::mutex> lock(m_messageQueue->m_mqmutex);
+        m_messageQueue->m_msg_queue.push(threadMsg);
+        m_messageQueue->m_mqconditionVariable.notify_all();        
+    }
 }
 
 void USBDetector::process_device(struct udev_device *dev)

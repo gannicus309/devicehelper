@@ -20,7 +20,7 @@ namespace devicehelper
 void DevicehelperServer::deviceDetection_worker()
 {
     LOG_GENERAL << "Create worker thread for monitoring\n";
-    m_usbDeviceDetector->udev_initialize();
+    m_usbDeviceDetector->udev_initialize(m_messageQueue);
 }
 
 void DevicehelperServer::deviceEventLoop_worker()
@@ -31,6 +31,8 @@ void DevicehelperServer::deviceEventLoop_worker()
 
 void DevicehelperServer::libUsb_changeProfile(int32_t vendorID, int32_t productID)
 {
+    (void)vendorID;
+    (void)productID;
     LOG_GENERAL << "Change LibUSB profile\n";
 }
 

@@ -116,6 +116,34 @@ void USBDetector::process_device(struct udev_device *dev)
             #endif
         }
 
+        const char *action = udev_device_get_action(dev);
+        if (action)
+        {
+
+            if (0 == strcmp(action, UDEV_DEVICE_ACTION_ADDED))
+            {
+                #ifdef LOGUSBMONITOR
+                LOG_USBMONITOR << "Device detected\n";
+                #endif
+                deviceInfo.devicestate = deviceList::DeviceState::DETECTION;
+            }
+            else if (0 == strcmp(action, UDEV_DEVICE_ACTION_REMOVED))
+            {
+                #ifdef LOGUSBMONITOR
+                LOG_USBMONITOR << "Device removed\n";
+                #endif
+                deviceInfo.devicestate = deviceList::DeviceState::EMPTY;
+            }
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            LOG_USBMONITOR << "udev_device_get_action returned empty, assuming "
+                                  "the device connection\n";
+            #endif
+            deviceInfo.devicestate = deviceList::DeviceState::DETECTION;
+        }
+
         const char *syspath = udev_device_get_syspath(dev);
         if (syspath)
         {
@@ -157,6 +185,36 @@ void USBDetector::process_device(struct udev_device *dev)
             LOG_USBMONITOR << "Bus number is empty\n";
             #endif
         }
+
+        const char *deviceClass =
+            udev_device_get_sysattr_value(dev, UDEV_DEVICE_CLASS);
+        if (deviceClass)
+        {
+            //TODO Add switch case to map enums
+            //deviceInfo.usbDeviceClass = deviceClass;
+            #ifdef LOGUSBMONITOR
+            LOG_USBMONITOR << "Deviceclass "<< deviceClass<<"\n";
+            #endif
+
+            using USBDeviceClassCode = devicehelper::deviceList::USBDeviceClassCode;
+            std::stringstream strstream;
+            strstream << std::hex << deviceClass;
+            int32_t usbDeviceClass;
+            strstream>>usbDeviceClass;
+
+            deviceInfo.usbDeviceClass = (USBDeviceClassCode) usbDeviceClass;
+
+            // Blacklist the Hubs from being displayed
+            if(deviceInfo.usbDeviceClass == USBDeviceClassCode::HUB)
+                return;
+        }
+        else
+        {
+            #ifdef LOGUSBMONITOR
+            LOG_USBMONITOR << "Deviceclass is empty\n";
+            #endif
+        }
+
 
         const char *deviceSubClass =
             udev_device_get_sysattr_value(dev, UDEV_DEVICE_SUBCLASS);

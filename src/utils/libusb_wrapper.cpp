@@ -19,14 +19,14 @@ LibUsbWrapper::LibUsbWrapper() {
   int ret = libusb_init(&mUsbContext);
   if (ret != LIBUSB_SUCCESS) {
     #ifdef LOGLIBUSBHELPER
-    DBG_MSG_LIBUSBHELPER << "Failed to initialize libusb\n";
+    LOG_LIBUSBHELPER << "Failed to initialize libusb\n";
     #endif
 #ifdef DEBUG
     libusb_set_option(mUsbContext, LIBUSB_OPTION_LOG_LEVEL);
 #endif
   } else {
     #ifdef LOGLIBUSBHELPER
-    DBG_MSG_LIBUSBHELPER << "libusb_init successful\n";
+    LOG_LIBUSBHELPER << "libusb_init successful\n";
     #endif
   }
 }
@@ -36,7 +36,7 @@ bool LibUsbWrapper::initDevice(int32_t vendorID, int32_t productID) {
   is_Intialized = false;
   if (!mUsbContext) {
     #ifdef LOGLIBUSBHELPER
-    DBG_MSG_LIBUSBHELPER << "Failed to initialize libusb\n";
+    LOG_LIBUSBHELPER << "Failed to initialize libusb\n";
     #endif
     return is_Intialized;
   }
@@ -46,7 +46,7 @@ bool LibUsbWrapper::initDevice(int32_t vendorID, int32_t productID) {
   }
   if (!mUsbContext) {
     #ifdef LOGLIBUSBHELPER
-    DBG_MSG_LIBUSBHELPER << "Failed to initialize libusb\n";
+    LOG_LIBUSBHELPER << "Failed to initialize libusb\n";
     #endif
     return is_Intialized;
   }
@@ -60,7 +60,7 @@ bool LibUsbWrapper::initDevice(int32_t vendorID, int32_t productID) {
   if (cnt < 0)
   {
     #ifdef LOGLIBUSBHELPER
-    DBG_MSG_LIBUSBHELPER << "No Device found\n";
+    LOG_LIBUSBHELPER << "No Device found\n";
     #endif
     return false;
   }
@@ -71,7 +71,7 @@ bool LibUsbWrapper::initDevice(int32_t vendorID, int32_t productID) {
       libusb_get_device_descriptor(device, &desc);  
       if ((desc.idVendor == vendorID)&&(desc.idProduct == productID)) {
           #ifdef LOGLIBUSBHELPER
-          DBG_MSG_LIBUSBHELPER << "Device found\n";
+          LOG_LIBUSBHELPER << "Device found\n";
           #endif
           found = device;
           break;
@@ -81,20 +81,20 @@ bool LibUsbWrapper::initDevice(int32_t vendorID, int32_t productID) {
       err = libusb_open(found, &mDeviceHandle);
       if (err || !mDeviceHandle) {
         #ifdef LOGLIBUSBHELPER
-        DBG_MSG_LIBUSBHELPER << "Not able to open the device, error:"<< libusb_error_name(err) <<"\n";
+        LOG_LIBUSBHELPER << "Not able to open the device, error:"<< libusb_error_name(err) <<"\n";
         #endif
       }
       else {
       is_Intialized = true;
       #ifdef LOGLIBUSBHELPER
-      DBG_MSG_LIBUSBHELPER << "libusb_open_device is successful\n";
+      LOG_LIBUSBHELPER << "libusb_open_device is successful\n";
       #endif
       }
     }
     else
     {
       #ifdef LOGLIBUSBHELPER
-      DBG_MSG_LIBUSBHELPER << "no device found\n";
+      LOG_LIBUSBHELPER << "no device found\n";
       #endif
     }
           
@@ -104,7 +104,7 @@ bool LibUsbWrapper::initDevice(int32_t vendorID, int32_t productID) {
 
 LibUsbWrapper::~LibUsbWrapper() {
   #ifdef LOGLIBUSBHELPER
-  DBG_MSG_LIBUSBHELPER << "Destructor Called\n";
+  LOG_LIBUSBHELPER << "Destructor Called\n";
   #endif
   if (mDeviceHandle) {
     libusb_close(mDeviceHandle);

@@ -34,14 +34,14 @@ namespace detector
 int USBDetector::udev_initialize()
 {
 #ifdef LOGUSBMONITOR
-    DBG_MSG_USBMONITOR << "udev Initializing\n";
+    LOG_USBMONITOR << "udev Initializing\n";
 #endif
 
     struct udev *udev = udev_new();
     if (!udev)
     {
         #ifdef LOGUSBMONITOR
-        DBG_MSG_USBMONITOR << stderr << "udev_new() failed\n";
+        LOG_USBMONITOR << stderr << "udev_new() failed\n";
         #endif
         return 1;
     }
@@ -56,7 +56,7 @@ int USBDetector::udev_initialize()
 void USBDetector::print_device(const deviceList::DeviceInfo &deviceInfo)
 {
 #ifdef LOGUSBMONITOR
-    DBG_MSG_USBMONITOR << deviceInfo.serialNumber << "\t" << std::hex
+    LOG_USBMONITOR << deviceInfo.serialNumber << "\t" << std::hex
                        << deviceInfo.vendorID << "\t" << std::hex
                        << deviceInfo.productID << "\t" << deviceInfo.devicePath
                        << '\n';
@@ -75,7 +75,7 @@ void USBDetector::process_device(struct udev_device *dev)
         if (vendor)
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "vendor " << vendor << "\n";
+            LOG_USBMONITOR << "vendor " << vendor << "\n";
             #endif
             std::stringstream strstream;
             strstream << std::hex << vendor;
@@ -84,7 +84,7 @@ void USBDetector::process_device(struct udev_device *dev)
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "vendorid empty\n";
+            LOG_USBMONITOR << "vendorid empty\n";
             #endif
         }
 
@@ -99,7 +99,7 @@ void USBDetector::process_device(struct udev_device *dev)
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "productid is  empty\n";
+            LOG_USBMONITOR << "productid is  empty\n";
             #endif
         }
 
@@ -112,7 +112,7 @@ void USBDetector::process_device(struct udev_device *dev)
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "serial number is empty\n";
+            LOG_USBMONITOR << "serial number is empty\n";
             #endif
         }
 
@@ -127,7 +127,7 @@ void USBDetector::process_device(struct udev_device *dev)
         if (deviceNo)
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "Device number " << deviceNo << "\n";
+            LOG_USBMONITOR << "Device number " << deviceNo << "\n";
             #endif
             std::stringstream strstream;
             strstream << deviceNo;
@@ -136,7 +136,7 @@ void USBDetector::process_device(struct udev_device *dev)
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "Device number is empty\n";
+            LOG_USBMONITOR << "Device number is empty\n";
             #endif
         }
 
@@ -145,7 +145,7 @@ void USBDetector::process_device(struct udev_device *dev)
         if (busNo)
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "Bus number " << busNo << "\n";
+            LOG_USBMONITOR << "Bus number " << busNo << "\n";
             #endif
             std::stringstream strstream;
             strstream << busNo;
@@ -154,7 +154,7 @@ void USBDetector::process_device(struct udev_device *dev)
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "Bus number is empty\n";
+            LOG_USBMONITOR << "Bus number is empty\n";
             #endif
         }
 
@@ -165,13 +165,13 @@ void USBDetector::process_device(struct udev_device *dev)
             //TODO Add switch case to map enums
             //deviceInfo.usbDeviceSubClass = deviceSubClass;
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "DeviceSubClass "<< deviceSubClass<<"\n";
+            LOG_USBMONITOR << "DeviceSubClass "<< deviceSubClass<<"\n";
             #endif
         }
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "DeviceSubClass is empty\n";
+            LOG_USBMONITOR << "DeviceSubClass is empty\n";
             #endif
         }
 
@@ -180,13 +180,13 @@ void USBDetector::process_device(struct udev_device *dev)
         {
             //deviceInfo.deviceType = (int)devType;
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "DevType "<< devType<<"\n";
+            LOG_USBMONITOR << "DevType "<< devType<<"\n";
             #endif
         }
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "DeviceType is empty\n";
+            LOG_USBMONITOR << "DeviceType is empty\n";
             #endif
         }
 
@@ -195,13 +195,13 @@ void USBDetector::process_device(struct udev_device *dev)
         {
             deviceInfo.mediumName = devName;
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "Device Name "<< devName<<"\n";
+            LOG_USBMONITOR << "Device Name "<< devName<<"\n";
             #endif
         }
         else
         {
             #ifdef LOGUSBMONITOR
-            DBG_MSG_USBMONITOR << "Device Name is empty\n";
+            LOG_USBMONITOR << "Device Name is empty\n";
             #endif
         }
         print_device(deviceInfo);
@@ -229,7 +229,7 @@ void USBDetector::enumerate_devices(struct udev *udev)
 
     udev_enumerate_unref(enumerate);
     #ifdef LOGUSBMONITOR
-    DBG_MSG_USBMONITOR << "enumerated\n";
+    LOG_USBMONITOR << "enumerated\n";
     #endif
 }
 

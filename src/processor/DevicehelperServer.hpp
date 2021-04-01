@@ -48,7 +48,7 @@ private:
     std::thread m_deviceEventLoopThread;
     std::shared_ptr<MessageQueue> m_messageQueue;
     std::shared_ptr<DeviceEventLoop> m_deviceEventLooper;
-
+    int32_t convertSerialNumberToDeviceID(const std::string& serialNumber);
 };
 
 } // namespace devicehelper

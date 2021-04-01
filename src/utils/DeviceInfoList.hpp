@@ -44,9 +44,8 @@ public:
     void listDevices();
     std::mutex m_deviceInfoList_mutex;
     std::vector<DeviceInfo> m_vDeviceinfoList;
-
 private:
-    DeviceListErrorCodes updateDeviceList( auto listIterator, const DeviceInfo &deviceInfo);
+    DeviceListErrorCodes updateDeviceList( std::vector<DeviceInfo>::iterator listIterator, const DeviceInfo &deviceInfo);
 };
 
 }//deviceList

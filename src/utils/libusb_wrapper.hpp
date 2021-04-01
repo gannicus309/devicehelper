@@ -7,7 +7,7 @@
 
 #include <libusb.h>
 #include <DeviceInfo.hpp>
-
+#include "AAPConsts.hpp"
 namespace devicehelper {
 namespace deviceList
 {
@@ -41,6 +41,9 @@ public:
     LibUsbWrapper &operator=(LibUsbWrapper &&) = delete;
 
     ~LibUsbWrapper();
+
+    FillDeviceDetailsErrorCodes fillDeviceDetails(DeviceInfo &deviceInfo);
+    ChangeProfileErrorCodes changeDeviceProfile(int32_t vendorID, int32_t productID);
 private:
     libusb_context* mUsbContext = nullptr;
     libusb_device_handle* mDeviceHandle = nullptr;
@@ -49,6 +52,9 @@ private:
     uint8_t mWriteEndpoint;
     bool is_Intialized;
     bool initDevice(int32_t vendorID , int32_t productID);
+    int startAccessoryMode();
+    uint8_t getUsbDeviceSubClass();
+    uint8_t getUsbBusNumber() const;
 };
 } // namespace devicelist
 }// namespace devicehelper

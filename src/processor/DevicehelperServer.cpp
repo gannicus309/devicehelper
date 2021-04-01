@@ -13,7 +13,7 @@
 #include "log.hpp"
 #include "USBDetector.hpp"
 #include "DevicehelperServer.hpp"
-#include "AAPConsts.hpp"
+
 namespace devicehelper
 {
 
@@ -95,7 +95,6 @@ bool DevicehelperServer::updateDeviceList(deviceList::DeviceInfo deviceinfo)
                     deviceinfo.activeProfile = deviceList::ProfileType::AOAP;
                     LOG_GENERAL << "Update to AOAP\n";
                 }
-                deviceinfo.profileList ={deviceList::ProfileType::PTP,deviceList::ProfileType::AOAP};
                 deviceinfo.devicestate = deviceList::DeviceState::READY;
                 ///////////////////////////////////////
                 {
@@ -201,6 +200,12 @@ void DevicehelperServer::changeDeviceProfile(const int32_t deviceID,const device
     {
         LOG_GENERAL << "Error in Profile changed\n";
     }
+}
+
+int32_t DevicehelperServer::convertSerialNumberToDeviceID(const std::string& serialNumber)
+{
+    return std::abs(static_cast<int32_t>(
+        std::hash<std::string>{}(serialNumber)));
 }
 
 } // end namespace devicehelper

@@ -127,7 +127,7 @@ DeviceListErrorCodes DeviceInfoList::removeDevice(const DeviceInfo &deviceInfo)
     return DeviceListErrorCodes::REMOVE_DEVICE_SUCCESSFUL;
 }
 
-DeviceListErrorCodes DeviceInfoList::updateDeviceList(auto listIterator, const DeviceInfo &deviceInfo)
+DeviceListErrorCodes DeviceInfoList::updateDeviceList(std::vector<DeviceInfo>::iterator  listIterator, const DeviceInfo &deviceInfo)
 {
     if (m_vDeviceinfoList.end() == listIterator)
     {

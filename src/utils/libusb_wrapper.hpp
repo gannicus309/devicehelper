@@ -11,6 +11,23 @@
 namespace devicehelper {
 namespace deviceList
 {
+    
+enum class ChangeProfileErrorCodes
+{
+    CHANGE_PROFILE_SUCCESS = 0,
+    DEVICE_OPEN_FAILED,
+    NOT_IN_ACCESSORY,    
+    ACCESSORY_PARSING_FAILED,
+    KERNEL_DRIVER_DETACH_FAILED,
+    SET_CONFIGURATION_FAILED,
+    CLAIM_INTERFACE_FAILED
+};
+
+enum class FillDeviceDetailsErrorCodes
+{
+    FILL_DEVICE_SUCCESSFUL,
+    DEVICE_OPEN_FAILED
+};
 
 class LibUsbWrapper 
 {    

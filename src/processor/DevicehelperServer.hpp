@@ -11,14 +11,17 @@
 #include "IDevicehelperServer.hpp"
 #include "USBDetector.hpp"
 #include "DeviceInfoList.hpp"
-
+#include "DeviceEventLoop.hpp"
+#include "MessageQueue.hpp"
 namespace devicehelper
 {
 class DeviceEventLoop;
 class DevicehelperServer : public IDevicehelperServer // NOLINT
 {
 public:
-    explicit DevicehelperServer(std::shared_ptr<detector::USBDetector> usbdetector);
+    explicit DevicehelperServer(std::shared_ptr<detector::USBDetector> usbdetector,
+        std::shared_ptr<MessageQueue> messagequeue,
+        std::shared_ptr<DeviceEventLoop> deviceEventLoop);
 
     DevicehelperServer(DevicehelperServer &&) = delete;
     DevicehelperServer(const DevicehelperServer &) = delete;
@@ -42,6 +45,9 @@ private:
     std::shared_ptr<detector::USBDetector> m_usbDeviceDetector;
     std::unique_ptr<deviceList::LibUsbWrapper> m_libUsbWrapper;
     std::thread m_devicemonitorThread;
+    std::thread m_deviceEventLoopThread;
+    std::shared_ptr<MessageQueue> m_messageQueue;
+    std::shared_ptr<DeviceEventLoop> m_deviceEventLooper;
 
 };
 

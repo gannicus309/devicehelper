@@ -8,7 +8,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <chrono>
-#include "Messagequeue.hpp"
+#include "MessageQueue.hpp"
 #include "DeviceInfoList.hpp"
 #include "processor/DevicehelperServer.hpp"
 /**

@@ -116,5 +116,6 @@ LibUsbWrapper::~LibUsbWrapper() {
   }
 }
 
+
 } // namespace deviceList
 } // namespace devicehelper

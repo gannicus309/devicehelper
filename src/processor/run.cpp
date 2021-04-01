@@ -9,7 +9,7 @@
 #include "external_glib_headers.hpp"
 #include "log.hpp"
 #include "run.hpp"
-#include "usbdetector.hpp"
+#include "USBDetector.hpp"
 
 namespace devicehelper
 {

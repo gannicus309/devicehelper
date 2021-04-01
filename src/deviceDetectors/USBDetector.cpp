@@ -1,5 +1,5 @@
 /*********************************************************************
- *  @file         usbdetector.cpp
+ *  @file         USBDetector.cpp
  *  @author       Ganesh Rengasamy
  *********************************************************************/
 
@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <cstring>
 #include <sstream>
-#include "usbdetector.hpp"
+#include "USBDetector.hpp"
 #include "log.hpp"
 
 #define SUBSYSTEM "usb"

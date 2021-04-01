@@ -7,6 +7,7 @@ add_library (processor STATIC
     DevicehelperServer.cpp
     ${CMAKE_SOURCE_DIR}/src/utils/DeviceEventLoop.cpp
     ${CMAKE_SOURCE_DIR}/src/utils/DeviceInfoList.cpp
+    ${CMAKE_SOURCE_DIR}/src/utils/AAPConsts.cpp
 )
 
 target_include_directories (processor
@@ -22,6 +23,8 @@ target_include_directories (processor
 
 target_link_libraries (processor
     PRIVATE
-       device-detectors
-       ${GIOMM_LIBRARIES}
+        pthread
+        device-detectors
+        ${GIOMM_LIBRARIES}
+        ${LIBUSB_LIBRARIES}
 )

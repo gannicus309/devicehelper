@@ -9,3 +9,4 @@
 #define LOG_USBMONITOR std::cout<<"[USBMONITOR] "<<__FUNCTION__ << "[" << __LINE__ << "] "
 #define LOG_LIBUSBHELPER std::cout<<"[LIBUSBHELPER] "<<__FUNCTION__ << "[" << __LINE__ << "] "
 #define LOG_DEVICELIST std::cout<<"[DEVICELIST] "<<__FUNCTION__ << "[" << __LINE__ << "] "
+#define LOG_DEVICEEVENTLOOP std::cout<<"[DEVICEEVENTLOOP] "<<__FUNCTION__ << "[" << __LINE__ << "] "

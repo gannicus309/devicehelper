@@ -5,6 +5,8 @@ add_library (processor STATIC
     run.cpp
     ${CMAKE_SOURCE_DIR}/src/utils/libusb_wrapper.cpp
     DevicehelperServer.cpp
+    ${CMAKE_SOURCE_DIR}/src/utils/DeviceEventLoop.cpp
+    ${CMAKE_SOURCE_DIR}/src/utils/DeviceInfoList.cpp
 )
 
 target_include_directories (processor
@@ -15,6 +17,7 @@ target_include_directories (processor
         ${CMAKE_SOURCE_DIR}/src/deviceDetectors
         ${LIBUSB_INCLUDE_DIRS}
         ${GIOMM_INCLUDE_DIRS}
+        ${Boost_INCLUDE_DIRS}
 )
 
 target_link_libraries (processor

@@ -10,7 +10,7 @@
 #include "libusb_wrapper.hpp"
 #include "IDevicehelperServer.hpp"
 #include "USBDetector.hpp"
-
+#include "DeviceInfoList.hpp"
 
 namespace devicehelper
 {
@@ -32,8 +32,6 @@ public:
     void deviceEventLoop_worker();
     void libUsb_changeProfile(int32_t vendorID, int32_t productID);
     void startUSBMonitor();
-    void setGeneralDeviceManager(GeneralDeviceManager* generalDeviceManager);
-    void setMobileDeviceList(MobileDeviceList* mobileDeviceList);
     std::vector<deviceList::DeviceInfo> getDeviceInfoList() override;
     void DevicelistChanged() override;
     void changeDeviceProfile(const int32_t deviceID,const deviceList::ProfileType profile) override;
@@ -43,6 +41,7 @@ public:
 private:
     std::shared_ptr<detector::USBDetector> m_usbDeviceDetector;
     std::unique_ptr<deviceList::LibUsbWrapper> m_libUsbWrapper;
+    std::thread m_devicemonitorThread;
 
 };
 
